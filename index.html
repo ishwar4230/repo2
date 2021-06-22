@@ -1,0 +1,527 @@
+<!doctype html>
+
+<html>
+
+
+<head>
+
+
+<title>PUZZLE-GAME</title>
+ <meta charset="utf-8" />
+ <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+<style type="text/css">
+    .main{
+           background-image:url("https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569__480.jpg");
+           width: 100%;
+           height: 800px;
+          }
+   p{
+      margin:0;
+      padding:0;
+    }
+  div{
+      margin:0;
+      padding:0;
+     }
+
+    .name{
+            width:100%;
+            height:100px;
+            
+         }
+    .game{
+           color:red;
+           width:100%;
+           font-size:250%;
+           font-family:Brush Script MT, Brush Script Std, cursive;
+           padding-top:50px;
+           text-align:center;
+         }
+     .nav{
+           width:100%;
+           height:100px;
+         }
+    .new_game{
+              position:relative;
+              float:left;
+              width:150px;
+              height:50px;
+              font-size:150%;
+              margin-left:10%;
+             }
+    .time{
+              position:relative;
+              float:middle;
+              color:white;
+              font-size:200%;
+              margin-left:40%;
+              
+         }
+
+    .move{
+              position:relative;
+              float:right;
+              color:white;
+              width:150px;
+              height:50px;
+              font-size:200%;
+              margin-right:10%;
+              margin-top:-4%;
+           }
+    button:hover{
+                 background-color:#40ff00;'
+                }
+
+    .buttons{
+             display:grid;
+             grid-template-columns:80px 80px 80px 80px;
+             grid-template-rows:80px 80px 80px 80px;
+             grid-gap: 2%;
+             margin-left:30%;
+            }
+    .butt{
+             font-size: 200%;
+
+
+    }
+    .hisc{
+         color:white;
+         font-size: 250%;
+    }
+    #dev{
+         font-size:200% ;
+         text-align: center;
+         margin: auto;
+    }
+
+    #name{
+            font-size: 300%;
+           text-align: center;
+           margin: auto;
+           font-family:cursive ;
+    }
+
+</style>
+</head>
+
+</body>
+
+<div class="main">
+
+   <div class="heading">
+            <div class="name">
+                 <p class="game">PUZZLE GAME</p>     
+            </div>
+
+            <div class="nav">
+                  <button class="new_game" onclick="newgame(A)">NEW GAME </button>
+                  <p class="time"> TIME :<span id="timer"></span>SEC</p>
+                  <p class="move">MOVES :<span id="moves"></span> </p>
+            </div>
+    
+   </div>
+
+   <div class="gmain">
+
+              <div class="buttons">
+                  <button class="butt" id="b1" onclick="but1(); win()"></button><button class="butt" id="b2" onclick="but2(); win()"></button><button class="butt" id="b3" onclick="but3(); win()"></button><button class="butt" id="b4" onclick="but4(); win()"></button><button class="butt" id="b5" onclick="but5(); win()"></button>
+                  
+                  <button class="butt" id="b6" onclick="but6(); win()"></button><button class="butt" id="b7" onclick="but7(); win()"></button><button class="butt" id="b8" onclick="but8(); win()"></button><button class="butt" id="b9" onclick="but9(); win()"></button><button class="butt" id="b10" onclick="but10(); win()"></button>
+                 
+                  <button class="butt" id="b11" onclick="but11(); win()"></button><button class="butt" id="b12" onclick="but12(); win()"></button><button class="butt" id="b13" onclick="but13(); win()"></button><button class="butt" id="b14" onclick="but14(); win()"></button><button class="butt" id="b15" onclick="but15(); win()"></button>
+                  
+                  <button class="butt" id="b16" onclick="but16(); win()"></button>
+         
+
+                  </div>
+    <br /><br /><br /><br /><br />
+                  <p class="hisc">Highest score :<span id="sc"></span>sec</p>
+
+  </div>
+</div>
+
+  <script>
+        alert("Click on 'new-game' to start the game");
+         var A= new Array(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,' ');
+
+         var mov=0;
+         var tim=0;
+         var i=0;
+         var highscore = localstorage.getItem("highscore");
+         var score= 0;
+         localStorage.setItem("highscore",score);
+function randomisearr(A){
+          for(let i=A.length-1;i>0;i--){
+                 const j= Math.floor(Math.random()*(i+1));
+                  [A[i],A[j]]=[A[j],A[i]];
+          }
+          return A;
+}
+
+function newgame(array){
+                   alert("NEW-GAME STARTED!");
+                   document.getElementById("moves").innerHTML=0;
+                   document.getElementById("timer").innerHTML=0;
+                   
+                    array = randomisearr(array);     
+
+                document.getElementById("b1").innerHTML=array[0];
+                document.getElementById("b2").innerHTML=array[1];
+                document.getElementById("b3").innerHTML=array[2];
+                document.getElementById("b4").innerHTML=array[3];
+                document.getElementById("b5").innerHTML=array[4];
+                document.getElementById("b6").innerHTML=array[5];
+                document.getElementById("b7").innerHTML=array[6];
+                document.getElementById("b8").innerHTML=array[7];
+                document.getElementById("b9").innerHTML=array[8];
+                document.getElementById("b10").innerHTML=array[9];
+                document.getElementById("b11").innerHTML=array[10];
+                document.getElementById("b12").innerHTML=array[11];
+                document.getElementById("b13").innerHTML=array[12];
+                document.getElementById("b14").innerHTML=array[13];
+                document.getElementById("b15").innerHTML=array[14];
+                document.getElementById("b16").innerHTML=array[15];
+
+                mov=0;
+                tim=0;
+                i=i+1;
+                
+           var myVar = setInterval(total_time, 1000); 
+             if(i>1){
+               clearInterval(myVar);
+             }
+      }
+
+    function but1(){
+     
+               if(document.getElementById("b2").innerHTML==" "){
+                document.getElementById("b2").innerHTML=document.getElementById("b1").innerHTML;
+                document.getElementById("b1").innerHTML=" ";
+               total_moves();}
+
+               if(document.getElementById("b5").innerHTML==" "){
+                document.getElementById("b5").innerHTML=document.getElementById("b1").innerHTML;
+                document.getElementById("b1").innerHTML=" ";
+               total_moves();}
+    }
+
+    function but2(){
+     
+     if(document.getElementById("b3").innerHTML==" "){
+      document.getElementById("b3").innerHTML=document.getElementById("b2").innerHTML;
+      document.getElementById("b2").innerHTML=" ";
+               total_moves();}
+
+     if(document.getElementById("b6").innerHTML==" "){
+      document.getElementById("b6").innerHTML=document.getElementById("b2").innerHTML;
+      document.getElementById("b2").innerHTML=" ";
+               total_moves();}
+
+      if(document.getElementById("b1").innerHTML==" "){
+                document.getElementById("b1").innerHTML=document.getElementById("b2").innerHTML;
+                document.getElementById("b2").innerHTML=" ";
+               total_moves();}
+}
+
+function but3(){
+     
+     if(document.getElementById("b2").innerHTML==" "){
+      document.getElementById("b2").innerHTML=document.getElementById("b3").innerHTML;
+      document.getElementById("b3").innerHTML=" ";
+               total_moves();}
+
+     if(document.getElementById("b4").innerHTML==" "){
+      document.getElementById("b4").innerHTML=document.getElementById("b3").innerHTML;
+      document.getElementById("b3").innerHTML=" ";
+               total_moves();}
+
+      if(document.getElementById("b7").innerHTML==" "){
+                document.getElementById("b7").innerHTML=document.getElementById("b3").innerHTML;
+                document.getElementById("b3").innerHTML=" ";
+               total_moves();}
+}
+
+function but4(){
+     
+     if(document.getElementById("b3").innerHTML==" "){
+      document.getElementById("b3").innerHTML=document.getElementById("b4").innerHTML;
+      document.getElementById("b4").innerHTML=" ";
+               total_moves();}
+
+     if(document.getElementById("b8").innerHTML==" "){
+      document.getElementById("b8").innerHTML=document.getElementById("b4").innerHTML;
+      document.getElementById("b4").innerHTML=" ";
+               total_moves();}
+}
+
+function but5(){
+     
+     if(document.getElementById("b1").innerHTML==" "){
+      document.getElementById("b1").innerHTML=document.getElementById("b5").innerHTML;
+      document.getElementById("b5").innerHTML=" ";
+               total_moves();}
+
+     if(document.getElementById("b6").innerHTML==" "){
+      document.getElementById("b6").innerHTML=document.getElementById("b5").innerHTML;
+      document.getElementById("b5").innerHTML=" ";
+               total_moves();}
+
+      if(document.getElementById("b9").innerHTML==" "){
+                document.getElementById("b9").innerHTML=document.getElementById("b5").innerHTML;
+                document.getElementById("b5").innerHTML=" ";
+               total_moves();}
+}
+
+function but6(){
+     
+     if(document.getElementById("b2").innerHTML==" "){
+      document.getElementById("b2").innerHTML=document.getElementById("b6").innerHTML;
+      document.getElementById("b6").innerHTML=" ";
+               total_moves();}
+
+     if(document.getElementById("b5").innerHTML==" "){
+      document.getElementById("b5").innerHTML=document.getElementById("b6").innerHTML;
+      document.getElementById("b6").innerHTML=" ";
+               total_moves();}
+
+      if(document.getElementById("b7").innerHTML==" "){
+                document.getElementById("b7").innerHTML=document.getElementById("b6").innerHTML;
+                document.getElementById("b6").innerHTML=" ";
+               total_moves();}
+
+      if(document.getElementById("b10").innerHTML==" "){
+                document.getElementById("b10").innerHTML=document.getElementById("b6").innerHTML;
+                document.getElementById("b6").innerHTML=" ";
+               total_moves();}
+}
+
+function but7(){
+     
+     if(document.getElementById("b3").innerHTML==" "){
+      document.getElementById("b3").innerHTML=document.getElementById("b7").innerHTML;
+      document.getElementById("b7").innerHTML=" ";
+               total_moves();}
+
+     if(document.getElementById("b6").innerHTML==" "){
+      document.getElementById("b6").innerHTML=document.getElementById("b7").innerHTML;
+      document.getElementById("b7").innerHTML=" ";
+               total_moves();}
+
+      if(document.getElementById("b8").innerHTML==" "){
+                document.getElementById("b8").innerHTML=document.getElementById("b7").innerHTML;
+                document.getElementById("b7").innerHTML=" ";
+               total_moves();}
+
+      if(document.getElementById("b11").innerHTML==" "){
+                document.getElementById("b11").innerHTML=document.getElementById("b7").innerHTML;
+                document.getElementById("b7").innerHTML=" ";
+               total_moves();}
+}
+
+function but8(){
+     
+     if(document.getElementById("b4").innerHTML==" "){
+      document.getElementById("b4").innerHTML=document.getElementById("b8").innerHTML;
+      document.getElementById("b8").innerHTML=" ";
+               total_moves();}
+
+     if(document.getElementById("b7").innerHTML==" "){
+      document.getElementById("b7").innerHTML=document.getElementById("b8").innerHTML;
+      document.getElementById("b8").innerHTML=" ";
+               total_moves();}
+
+      if(document.getElementById("b12").innerHTML==" "){
+                document.getElementById("b12").innerHTML=document.getElementById("b8").innerHTML;
+                document.getElementById("b8").innerHTML=" ";
+               total_moves();}
+}
+
+function but9(){
+     
+     if(document.getElementById("b5").innerHTML==" "){
+      document.getElementById("b5").innerHTML=document.getElementById("b9").innerHTML;
+      document.getElementById("b9").innerHTML=" ";
+               total_moves();}
+
+     if(document.getElementById("b10").innerHTML==" "){
+      document.getElementById("b10").innerHTML=document.getElementById("b9").innerHTML;
+      document.getElementById("b9").innerHTML=" ";
+               total_moves();}
+
+      if(document.getElementById("b13").innerHTML==" "){
+                document.getElementById("b13").innerHTML=document.getElementById("b9").innerHTML;
+                document.getElementById("b9").innerHTML=" ";
+               total_moves();}
+}
+
+function but10(){
+     
+     if(document.getElementById("b6").innerHTML==" "){
+      document.getElementById("b6").innerHTML=document.getElementById("b10").innerHTML;
+      document.getElementById("b10").innerHTML=" ";
+               total_moves();}
+
+     if(document.getElementById("b9").innerHTML==" "){
+      document.getElementById("b9").innerHTML=document.getElementById("b10").innerHTML;
+      document.getElementById("b10").innerHTML=" ";
+               total_moves();}
+
+      if(document.getElementById("b11").innerHTML==" "){
+                document.getElementById("b11").innerHTML=document.getElementById("b10").innerHTML;
+                document.getElementById("b10").innerHTML=" ";
+               total_moves();}
+
+      if(document.getElementById("b14").innerHTML==" "){
+                document.getElementById("b14").innerHTML=document.getElementById("b10").innerHTML;
+                document.getElementById("b10").innerHTML=" ";
+               total_moves();}
+}
+
+function but11(){
+     
+     if(document.getElementById("b7").innerHTML==" "){
+      document.getElementById("b7").innerHTML=document.getElementById("b11").innerHTML;
+      document.getElementById("b11").innerHTML=" ";
+               total_moves();}
+
+     if(document.getElementById("b10").innerHTML==" "){
+      document.getElementById("b10").innerHTML=document.getElementById("b11").innerHTML;
+      document.getElementById("b11").innerHTML=" ";
+               total_moves();}
+
+      if(document.getElementById("b12").innerHTML==" "){
+                document.getElementById("b12").innerHTML=document.getElementById("b11").innerHTML;
+                document.getElementById("b11").innerHTML=" ";
+               total_moves();}
+
+      if(document.getElementById("b15").innerHTML==" "){
+                document.getElementById("b15").innerHTML=document.getElementById("b11").innerHTML;
+                document.getElementById("b11").innerHTML=" ";
+               total_moves();}
+}
+
+function but12(){
+     
+     if(document.getElementById("b8").innerHTML==" "){
+      document.getElementById("b8").innerHTML=document.getElementById("b12").innerHTML;
+      document.getElementById("b12").innerHTML=" ";
+               total_moves();}
+
+     if(document.getElementById("b11").innerHTML==" "){
+      document.getElementById("b11").innerHTML=document.getElementById("b12").innerHTML;
+      document.getElementById("b12").innerHTML=" ";
+               total_moves();}
+
+      if(document.getElementById("b16").innerHTML==" "){
+                document.getElementById("b16").innerHTML=document.getElementById("b12").innerHTML;
+                document.getElementById("b12").innerHTML=" ";
+               total_moves();}
+}
+
+function but13(){
+     
+     if(document.getElementById("b9").innerHTML==" "){
+      document.getElementById("b9").innerHTML=document.getElementById("b13").innerHTML;
+      document.getElementById("b13").innerHTML=" ";
+               total_moves();}
+
+     if(document.getElementById("b14").innerHTML==" "){
+      document.getElementById("b14").innerHTML=document.getElementById("b13").innerHTML;
+      document.getElementById("b13").innerHTML=" ";
+               total_moves();}
+}
+
+function but14(){
+     
+     if(document.getElementById("b10").innerHTML==" "){
+      document.getElementById("b10").innerHTML=document.getElementById("b14").innerHTML;
+      document.getElementById("b14").innerHTML=" ";
+               total_moves();}
+
+     if(document.getElementById("b13").innerHTML==" "){
+      document.getElementById("b13").innerHTML=document.getElementById("b14").innerHTML;
+      document.getElementById("b14").innerHTML=" ";
+               total_moves();}
+
+      if(document.getElementById("b15").innerHTML==" "){
+                document.getElementById("b15").innerHTML=document.getElementById("b14").innerHTML;
+                document.getElementById("b14").innerHTML=" ";
+               total_moves();}
+}
+
+function but15(){
+     
+     if(document.getElementById("b11").innerHTML==" "){
+      document.getElementById("b11").innerHTML=document.getElementById("b15").innerHTML;
+      document.getElementById("b15").innerHTML=" ";
+               total_moves();}
+
+     if(document.getElementById("b14").innerHTML==" "){
+      document.getElementById("b14").innerHTML=document.getElementById("b15").innerHTML;
+      document.getElementById("b15").innerHTML=" ";
+               total_moves();}
+
+      if(document.getElementById("b16").innerHTML==" "){
+                document.getElementById("b16").innerHTML=document.getElementById("b15").innerHTML;
+                document.getElementById("b15").innerHTML=" ";
+               total_moves();}
+}
+
+function but16(){
+     
+     if(document.getElementById("b12").innerHTML==" "){
+      document.getElementById("b12").innerHTML=document.getElementById("b16").innerHTML;
+      document.getElementById("b16").innerHTML=" ";
+               total_moves();}
+
+     if(document.getElementById("b15").innerHTML==" "){
+      document.getElementById("b15").innerHTML=document.getElementById("b16").innerHTML;
+      document.getElementById("b16").innerHTML=" ";
+               total_moves();}
+}
+
+function win(){
+     if(document.getElementById("b1").innerHTML==1&&document.getElementById("b2").innerHTML==2&&document.getElementById("b3").innerHTML==3&&document.getElementById("b4").innerHTML==4&&document.getElementById("b5").innerHTML==5&&document.getElementById("b6").innerHTML==6&&document.getElementById("b7").innerHTML==7&&document.getElementById("b8").innerHTML==8&&document.getElementById("b9").innerHTML==9&&document.getElementById("b10").innerHTML==10&&document.getElementById("b11").innerHTML==11&&document.getElementById("b12").innerHTML==12&&document.getElementById("b13").innerHTML==13&&document.getElementById("b14").innerHTML==14&&document.getElementById("b15").innerHTML==15){
+               alert("Congratulations!!! YOU won THE GAME!!!");
+               if(localStorage.getItem("highscore")==0){
+                    score=tim;
+                    localStorage.setItem("highscore",score);
+                    document.getElementById("sc").innerHTML=score;
+               }
+               else{
+                    if(localStorage.getItem("highscore")>tim){
+                         score=tim;
+                         localStorage.setItem("highscore",score);
+                         document.getElementById("sc").innerHTML=score;
+                    }
+               }
+               newgame(A);}
+}
+
+function total_moves(){
+
+       mov=mov+1;
+       document.getElementById("moves").innerHTML=mov;
+}
+
+function total_time(){
+           tim=tim+1;
+           document.getElementById("timer").innerHTML=tim;
+
+}
+
+  </script>
+
+  <p id="dev">-:Developed by :-</p>
+  <br />
+  <p id="name">~ISHWAR KASHYAP~</p>
+  <br />
+  <br />
+  <a href="http://www.facebook.com/ishwar.kashyap.1253236" target="_blank"><img src="https://1000logos.net/wp-content/uploads/2021/04/Facebook-logo.png" height=200px width=300px></a>
+  <a href="https://www.instagram.com/__ishwar__4230/?hl=en" target="_blank"><img src="https://i.pinimg.com/originals/4b/4e/13/4b4e1359b5132766e458611a8ee4cda3.jpg" height=200px width=200px></a>
+  <br /><br />
+  <a href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnIxPbAUTU6Cj4vz5E45GtMg2aRhPx_zJhHNP70qNr9gHTroZDQe2IWnz5rt89mbKYkUM&usqp=CAU" target="_blank">click to see the image of the solved puzzle</a>
+</body>
+
+</html>
